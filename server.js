@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
-
+const globalErrorHandler = require("./controllers/GlobalErrorHandler");
 const protocol = require("http").createServer(app);
 
 require("dotenv").config();
@@ -28,11 +28,7 @@ const routes = require("./routes/routes");
 
 routes(app);
 
-// TODO: Add all routes handler
-
-// TODO: Add users model
-
-// TODO: Add Global Error handler
+app.use(globalErrorHandler);
 
 // ASSIGN PORT AND START SERVER
 const port = process.env.PORT;
