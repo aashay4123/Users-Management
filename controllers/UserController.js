@@ -33,7 +33,7 @@ exports.getOne = (Model) =>
 
 exports.getAll = (Model, filter = {}) =>
   catchAsync(async (req, res, next) => {
-    const doc = await fModel.find(filter);
+    const doc = await Model.find(filter);
 
     // SEND RESPONSE
     res.status(200).json({
@@ -42,3 +42,18 @@ exports.getAll = (Model, filter = {}) =>
       data: doc,
     });
   });
+
+exports.updateOne = (Model) => {
+  return catchAsync(async (req, res, next) => {
+    const doc = await Model.findByIdAndUpdate(req.params.id, req.body);
+
+    if (!doc) {
+      return next(new AppError("No document found with that ID", 404));
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: doc,
+    });
+  });
+};

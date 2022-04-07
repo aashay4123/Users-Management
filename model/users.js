@@ -12,6 +12,10 @@ const UserSchema = new mongoose.Schema(
       maxlength: 265,
       trim: true,
     },
+    gender: {
+      type: String,
+      required: true,
+    },
     emailId: {
       type: String,
       required: true,
