@@ -1,5 +1,10 @@
 import React from "react";
+import Layout from "./Layout";
 
 export const AddUser = () => {
-  return <div>AddUser</div>;
+  return (
+    <Layout>
+      <h1>Add User</h1>
+    </Layout>
+  );
 };

@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/aashay4123/Users-Management#readme",
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@material-ui/core": "^4.12.4",
     "concurrently": "^7.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
