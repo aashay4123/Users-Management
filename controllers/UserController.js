@@ -1,5 +1,5 @@
 const AppError = require("../Utils/AppError");
-const { catchAsync } = require("../Utils/utils");
+const { catchAsync, filterObj } = require("../Utils/utils");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -45,7 +45,22 @@ exports.getAll = (Model, filter = {}) =>
 
 exports.updateOne = (Model) => {
   return catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(req.params.id, req.body);
+    let data = {};
+    const filteredBody = filterObj(
+      req.body,
+      "name",
+      "description",
+      "gender",
+      "emailId",
+      "photo",
+      "website",
+      "mobile_number",
+    );
+
+    Object.keys(filteredBody).forEach((el) => (data[el] = filteredBody[el]));
+    const doc = await Model.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+    });
 
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
@@ -57,3 +72,30 @@ exports.updateOne = (Model) => {
     });
   });
 };
+
+exports.createOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    let data = {};
+    const filteredBody = filterObj(
+      req.body,
+      "name",
+      "description",
+      "gender",
+      "emailId",
+      "role",
+      "photo",
+      "website",
+      "mobile_number",
+    );
+
+    Object.keys(filteredBody).forEach((el) => (data[el] = filteredBody[el]));
+
+    const doc = await Model.create(data);
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
+  });

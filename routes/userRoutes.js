@@ -20,7 +20,7 @@ router
 router
   .route("/:id")
   .get(getOne(User))
-  .patch(userValidator, runValidation, updateOne(User))
+  .patch(updateOne(User))
   .delete(deleteOne(User));
 
 module.exports = router;
